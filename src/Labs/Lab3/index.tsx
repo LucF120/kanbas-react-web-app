@@ -1,7 +1,7 @@
 export default function Lab3() {
 	return(
 		<div>
-			<h1>Lab 3</h1>
+			<h2>Lab 3</h2>
 		</div>	
 	);
 }
