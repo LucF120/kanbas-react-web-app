@@ -1,7 +1,21 @@
+import Forms from "./Forms";
+import Headings from "./Headings"
+import Images from "./Images";
+import Lists from "./Lists";
+import Paragraphs from "./Paragraphs";
+import Tables from "./Tables";
+
 export default function Lab1() {
-	return(
-		<div>
+	return (
+		<div id="wd-lab1">
 			<h2>Lab 1</h2>
-		</div>	
+			<h3>HTML Examples</h3>
+			<Headings />
+			<Paragraphs />
+			<Lists />
+			<Tables />
+			<Images />
+			<Forms />
+		</div>
 	);
 }
