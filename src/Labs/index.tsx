@@ -7,6 +7,8 @@ import { Route, Routes, Navigate } from "react-router";
 export default function Labs() {
     return (
         <div>
+            <h1>Luc Ferrara</h1>
+            <br />
             <h1>Labs</h1>
             <TOC />
             <Routes>
