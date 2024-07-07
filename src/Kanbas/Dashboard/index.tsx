@@ -21,78 +21,78 @@ export default function Dashboard() {
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/2810/Home">
                             CS2810 Mathematics of Data Models
                         </a>
                         <p className="wd-dashboard-course-title">
                             Mathematics of Data Models
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/2810/Home"> Go </a>
                     </div>
                 </div>
                 <div className="wd-dashboard-course">
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/3500/Home">
                             CS3500 Object Oriented Design
                         </a>
                         <p className="wd-dashboard-course-title">
                             Java Object Oriented Design
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/3500/Home"> Go </a>
                     </div>
                 </div>
                 <div className="wd-dashboard-course">
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/3650/Home">
                             CS3650 Computer Systems
                         </a>
                         <p className="wd-dashboard-course-title">
                             Computer Systems
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/3650/Home"> Go </a>
                     </div>
                 </div>
                 <div className="wd-dashboard-course">
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/3000/Home">
                             CS3000 Algorithms
                         </a>
                         <p className="wd-dashboard-course-title">
                             Algorithms
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/3000/Home"> Go </a>
                     </div>
                 </div>
                 <div className="wd-dashboard-course">
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/4410/Home">
                             CS4410 Compilers
                         </a>
                         <p className="wd-dashboard-course-title">
                             Compilers
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/4410/Home"> Go </a>
                     </div>
                 </div>
                 <div className="wd-dashboard-course">
                     <img src="/images/reactjs.jpg" width={200} />
                     <div>
                         <a className="wd-dashboard-course-link"
-                            href="#/Kanbas/Courses/1234/Home">
+                            href="#/Kanbas/Courses/5610/Home">
                             CS5610 Web Development
                         </a>
                         <p className="wd-dashboard-course-title">
                             Website Development
                         </p>
-                        <a href="#/Kanbas/Courses/1234/Home"> Go </a>
+                        <a href="#/Kanbas/Courses/5610/Home"> Go </a>
                     </div>
                 </div>
             </div>
