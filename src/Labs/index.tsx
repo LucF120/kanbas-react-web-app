@@ -8,6 +8,7 @@ export default function Labs() {
     return (
         <div>
             <h1>Luc Ferrara</h1>
+            <h1>CS5610 SU2 2024 - Section 01</h1>
             <br />
             <h1>Labs</h1>
             <TOC />
