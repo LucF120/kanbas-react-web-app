@@ -25,10 +25,10 @@ export default function Grades() {
                     <div className="me-auto col-6">
                         <h1>Student Names</h1>
                         <div className="input-group d-flex mb-3 flex-grow-1">
-                            <label className="input-group-text bg-white border border-1 border-end-0" htmlFor="wd-assignment-search">
+                            <label className="input-group-text bg-white border border-1 border-end-0" htmlFor="wd-student-search">
                                 <FaSearch className="border-0" />
                             </label>
-                            <select id="wd-assignment-search" className="form-select me-2 fs-3 ps-1 border border-1 border-start-0">
+                            <select id="wd-student-search" className="form-select me-2 fs-3 ps-1 border border-1 border-start-0">
                                 <option><span className="text-secondary">Search Students</span></option>
                             </select>
                         </div>
