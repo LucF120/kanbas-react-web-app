@@ -5,12 +5,12 @@ export default function Dashboard() {
             <h2 id="wd-dashboard-published">Published Courses (7)</h2> <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    <div className="wd-dashboard-course col mb-2" style={{ width: "300px" }}>
-                        <div className="card">
+                    <div className="wd-dashboard-course col mb-2" style={{ width: "300px"}}>
+                        <div className="card text-truncate">
                             <div>
                                 <a className="wd-dashboard-course-link text-decoration-none text-dark"
                                     href="#/Kanbas/Courses/1234/Home">
-                                    <img src="/images/reactjs.jpg" width="100%" />
+                                    <img src="/images/reactjs.jpg" width="100%" height="171.39px"/>
                                     <div className="card-body">
                                         <h5 className="wd-dashboard-course-title card-title">CS1234 React JS</h5>
                                         <p className="card-text">
@@ -30,7 +30,7 @@ export default function Dashboard() {
                                     href="#/Kanbas/Courses/1234/Home">
                                     <img src="/images/CS2810.png" width="100%" />
                                     <div className="card-body">
-                                        <h5 className="wd-dashboard-course-title card-title">CS2810 Mathematics of Data Models</h5>
+                                        <h5 className="wd-dashboard-course-title card-title text-truncate">CS2810 Mathematics of Data Models</h5>
                                         <p className="card-text">
                                             CS2810<br />
                                             Sec 2, Fall 2024 Semester
@@ -48,7 +48,7 @@ export default function Dashboard() {
                                     href="#/Kanbas/Courses/1234/Home">
                                     <img src="/images/CS3500.png" width="100%" />
                                     <div className="card-body">
-                                        <h5 className="wd-dashboard-course-title card-title">CS3500 Object Oriented Design</h5>
+                                        <h5 className="wd-dashboard-course-title card-title text-truncate">CS3500 Object Oriented Design</h5>
                                         <p className="card-text">
                                             CS3500<br />
                                             Sec 3, Spring 2025 Semester
@@ -66,7 +66,7 @@ export default function Dashboard() {
                                     href="#/Kanbas/Courses/1234/Home">
                                     <img src="/images/CS3650.png" width="100%" />
                                     <div className="card-body">
-                                        <h5 className="wd-dashboard-course-title card-title">CS3650 Computer Systems</h5>
+                                        <h5 className="wd-dashboard-course-title card-title text-truncate">CS3650 Computer Systems</h5>
                                         <p className="card-text">
                                             CS3650<br />
                                             Sec 1, Spring 2025 Semester
