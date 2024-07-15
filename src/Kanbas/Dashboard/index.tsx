@@ -120,7 +120,7 @@ export default function Dashboard() {
                                     href="#/Kanbas/Courses/1234/Home">
                                     <img src="/images/CS5610.png" width="100%" />
                                     <div className="card-body">
-                                        <h5 className="wd-dashboard-course-title card-title">CS5610 Web Development</h5>
+                                        <h5 className="wd-dashboard-course-title card-title text-truncate">CS5610 Web Development</h5>
                                         <p className="card-text">
                                             CS5610<br />
                                             Sec 1, Summer II 2025 Semester
