@@ -16,10 +16,10 @@ export default function Courses() {
             </h2>
             <hr />
             <div className="row">
-                <div className="d-none d-md-block col-md-2">
+                <div className="d-none d-sm-block col-sm-2">
                 <CoursesNavigation />
                 </div>
-                <div className="d-block col-sm-12 col-md-10">
+                <div className="d-block col-sm-10">
                     <Routes>
                         <Route path="/" element={<Navigate to="Home" />} />
                         <Route path="Home" element={<Home />} />
