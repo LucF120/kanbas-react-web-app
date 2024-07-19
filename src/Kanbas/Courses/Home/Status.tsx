@@ -8,7 +8,6 @@ import { TfiAnnouncement } from "react-icons/tfi";
 import { IoStatsChart } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 
-{/* Find more icons */ }
 export default function CourseStatus() {
     return (
         <div id="wd-course-status" style={{ width: "300px" }}>
@@ -56,7 +55,6 @@ export default function CourseStatus() {
                 <IoIosNotifications className="me-2 fs-5" />
                 View Course Notifications
             </button>
-            {/* Complete the rest of the buttons */}
         </div>
     );
 }
