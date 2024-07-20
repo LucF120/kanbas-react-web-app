@@ -25,7 +25,7 @@ const dateToString = (date: string) => {
         timeOfDay = "am";
     }
 
-    return months[monthNum] + " " + day + " at " + hourNum + ":" + minute + " " + timeOfDay;
+    return months[monthNum-1] + " " + day + " at " + hourNum + ":" + minute + " " + timeOfDay;
 }
 
 export default dateToString;
