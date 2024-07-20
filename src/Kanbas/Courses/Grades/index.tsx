@@ -2,9 +2,15 @@ import { FaSearch } from "react-icons/fa";
 import { FaFilter } from "react-icons/fa";
 import { FaFileExport, FaFileImport } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
-
+import * as db from "../../Database";
+import { useParams } from "react-router";
 
 export default function Grades() {
+    const { cid } = useParams();
+    const users = db.users;
+    const enrollments = db.enrollments;
+    const grades = db.grades;
+    const assignments = db.assignments;
     return (
         <div>
             <div className="row">
@@ -56,71 +62,38 @@ export default function Grades() {
                     <thead>
                         <tr>
                             <td>Student Name</td>
-                            <td>
-                                A1 SETUP
-                                <br />
-                                Out of 100
-                            </td>
-                            <td>
-                                A2 HTML
-                                <br />
-                                Out of 100
-                            </td>
-                            <td>
-                                A3 CSS
-                                <br />
-                                Out of 100
-                            </td>
-                            <td>
-                                A4 BOOTSTRAP
-                                <br />
-                                Out of 100
-                            </td>
+                            {assignments
+                                .filter((a) => a.course === cid)
+                                .map((a) => (
+                                    <td>
+                                        {a.title}
+                                        <br />
+                                        Out of {a.points}
+                                    </td>
+                                ))}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-danger">Jane Adams</td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="96.67%"/></td>
-                            <td><input className="bg-light form-control text-center" value="92.18%"/></td>
-                            <td><input className="bg-light form-control text-center" value="66.22%"/></td>
-                        </tr>
-                        <tr>
-                            <td className="text-danger">Christina Allen</td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                        </tr>
-                        <tr>
-                            <td className="text-danger">Samreen Ansari</td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                        </tr>
-                        <tr>
-                            <td className="text-danger">Han Bao</td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                        </tr>
-                        <tr>
-                            <td className="text-danger">Mahi Sai Srinivas Bobbili</td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                            <td><input className="bg-light form-control text-center" value="100%"/></td>
-                        </tr>
-                        <tr>
-                            <td className="text-danger">Siran Cao</td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                            <td><input className="form-control text-center" value="100%"/></td>
-                        </tr>
+                        {enrollments
+                            .filter((e) => e.course === cid)
+                            .map((e) => {
+                                const user = users.find((user) => user._id === e.user);
+                                return (
+                                    <tr>
+                                        <td className="text-danger">{user && user.firstName} {user && user.lastName}</td>
+                                        {assignments
+                                            .filter((a) => a.course === cid)
+                                            .map((a) => {
+                                                const assignmentGrades = grades.filter((grade) => grade.assignment === a._id);
+                                                const studentGrade = user ? assignmentGrades.find((grade) => grade.student === user._id) : undefined;
+                                                return (
+                                                    <td><input className="bg-light form-control text-center" value={`${studentGrade && studentGrade.grade}`} /></td>
+                                                )
+                                            })
+                                        }
+                                    </tr>
+                                )
+                            })}
                     </tbody>
                 </table>
             </div>
