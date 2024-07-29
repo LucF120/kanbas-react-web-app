@@ -8,7 +8,6 @@ import ObjectStateVariable from "./ObjectStateVariable";
 import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import StringStateVariables from "./StringStateVariables";
-import TestingFile from "./TestingFile";
 
 export default function Lab4() {
     function sayHello() {
@@ -27,7 +26,6 @@ export default function Lab4() {
             <DateStateVariable />
             <ObjectStateVariable />
             <ArrayStateVariable />
-            <TestingFile />
         </div>
     )
 }
