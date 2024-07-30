@@ -1,7 +1,16 @@
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import AssignmentEditor from "./AssignmentEditor";
 
-export default function Search() {
+export default function Search(
+    { setAssignment,
+        assignment,
+        addAssignment }:
+        {
+            setAssignment: (assignment: any) => void;
+            assignment: any;
+            addAssignment: () => void;
+        }) {
     return (
         <div className="text-nowrap d-flex ">
             <div className="input-group d-flex">
@@ -14,11 +23,11 @@ export default function Search() {
                 <button id="wd-add-assignment-group" className="btn btn-lg btn-light me-2">
                     <FaPlus className="me-1" />
                     Group</button>
-                <button id="wd-add-assignment" className="btn btn-lg btn-danger float-end">
+                <button id="wd-add-assignment" className="btn btn-lg btn-danger float-end" data-bs-toggle="modal" data-bs-target="#wd-add-assignment-dialog">
                     <FaPlus className="me-1" />
                     Assignment</button>
             </div>
-
+            <AssignmentEditor dialogTitle="Add Assignment" assignment={assignment} setAssignment={setAssignment} addAssignment={addAssignment} />
         </div>
     );
 }
