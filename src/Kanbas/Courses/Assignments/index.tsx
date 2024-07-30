@@ -9,8 +9,9 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { useParams } from "react-router";
 import DateToString from "./DateToString";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment } from "./reducer";
-
+import { addAssignment, deleteAssignment } from "./reducer";
+import { FaTrash } from "react-icons/fa";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 export default function Assignments() {
     const { cid } = useParams();
@@ -29,22 +30,7 @@ export default function Assignments() {
 
     return (
         <div id="wd-assignments">
-            <Search
-                setAssignment={setAssignment}
-                assignment={assignment}
-                addAssignment={() => {
-                    dispatch(addAssignment(assignment));
-                    setAssignment({
-                        _id: 0,
-                        title: "",
-                        course: cid,
-                        description: "",
-                        points: 100,
-                        availableDate: "",
-                        dueDate: "",
-                        untilDate: "",
-                    });
-                }} /><br /><br />
+            <Search course={cid} assignment={assignment} /><br /><br />
             <div>
                 <ul id="wd-assignment-list" className="list-group rounded-0 border border-left-success">
                     <li className="list-group-item p-0 fs-5 border-gray">
@@ -80,7 +66,9 @@ export default function Assignments() {
                                         </div>
                                     </div>
                                     <GreenCheckmark />
+                                    <FaTrash role="button" className="text-danger ms-5" data-bs-toggle="modal" data-bs-target="#wd-delete-assignment-confirmation" />
                                     <IoEllipsisVertical className="ms-5 fs-3" />
+                                    <DeleteConfirmation dialogTitle="Assignment Delete Confirmation" assignment={assignment} />
                                 </div>
                             </li>
                         ))}
