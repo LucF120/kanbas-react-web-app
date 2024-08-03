@@ -43,7 +43,9 @@ export default function Assignments() {
                     </li>
                     {assignments
                         .filter((assignment: any) => assignment.course === cid)
-                        .map((assignment: any) => (
+                        .map((assignment: any) => {
+                            const customId = `wd-delete-assignment-confirmation-${assignment._id}`;
+                            return (
                             <li className="wd-assignment-list-item list-group-item p-0 fs-5">
                                 <div className="wd-title p-3 ps-2 d-flex align-items-center">
                                     <BsGripVertical className="me-4 fs-3" />
@@ -66,12 +68,13 @@ export default function Assignments() {
                                         </div>
                                     </div>
                                     <GreenCheckmark />
-                                    <FaTrash role="button" className="text-danger ms-5" data-bs-toggle="modal" data-bs-target="#wd-delete-assignment-confirmation" />
+                                    <FaTrash role="button" className="text-danger ms-5" data-bs-toggle="modal" data-bs-target={"#" + customId} />
                                     <IoEllipsisVertical className="ms-5 fs-3" />
-                                    <DeleteConfirmation dialogTitle="Assignment Delete Confirmation" assignment={assignment} />
+                                    <DeleteConfirmation dialogTitle="Assignment Delete Confirmation" assignment={assignment} customId={customId} />
                                 </div>
                             </li>
-                        ))}
+                        );
+                        })}
                 </ul>
             </div>
         </div>

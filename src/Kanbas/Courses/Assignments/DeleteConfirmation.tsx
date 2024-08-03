@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import { deleteAssignment } from "./reducer";
 
-export default function DeleteConfirmation({ dialogTitle, assignment }:
-    { dialogTitle: string; assignment: any; }) {
+export default function DeleteConfirmation({ dialogTitle, assignment, customId}:
+    { dialogTitle: string; assignment: any; customId: string; }) {
     const dispatch = useDispatch(); 
     return (
-        <div id="wd-delete-assignment-confirmation" className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div id={customId} className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
