@@ -1,28 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import ModulesControls from "./ModulesControls";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "react-router";
-import * as db from "../../Database";
-import { addModule, editModule, updateModule, deleteModule }
+import { addModule, editModule, updateModule, deleteModule, setModules }
     from "./reducer";
+import * as client from "./client";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Modules() {
     const { cid } = useParams();
     const [moduleName, setModuleName] = useState("");
     const { modules } = useSelector((state: any) => state.modulesReducer);
+    const [errorMessage, setErrorMessage] = useState(null);
     const dispatch = useDispatch();
+    const removeModule = async (moduleId: string) => {
+        try {
+            await client.deleteModule(moduleId);
+            dispatch(deleteModule(moduleId));
+        } catch (error: any) {
+            setErrorMessage(error.response.data.message);
+        }
 
+    };
+    const createModule = async (module: any) => {
+        const newModule = await client.createModule(cid as string, module);
+        dispatch(addModule(newModule));
+    };
+    const fetchModules = async () => {
+        const modules = await client.findModulesForCourse(cid as string);
+        dispatch(setModules(modules));
+    };
+    useEffect(() => {
+        fetchModules();
+    }, []);
 
     return (
         <div>
+            {errorMessage && (
+                <div id="wd-module-error-message" className="alert alert-danger mb-2 mt-2">{errorMessage}</div>
+            )}
             <ModulesControls
                 setModuleName={setModuleName}
                 moduleName={moduleName}
                 addModule={() => {
-                    dispatch(addModule({name: moduleName, course: cid }));
+                    createModule({ name: moduleName, course: cid });
                     setModuleName("");
                 }} />
             <br /><br /><br /><br />
@@ -46,9 +69,7 @@ export default function Modules() {
                                 )}
                                 <ModuleControlButtons
                                     moduleId={module._id}
-                                    deleteModule={(moduleId) => {
-                                        dispatch(deleteModule(moduleId));
-                                    }}
+                                    deleteModule={(moduleId) => { removeModule(moduleId); }}
                                     editModule={(moduleId) => dispatch(editModule(moduleId))} />
                             </div>
                             {module.lessons && (
