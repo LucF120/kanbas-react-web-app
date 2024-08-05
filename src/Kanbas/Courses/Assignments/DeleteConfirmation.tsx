@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
 
-export default function DeleteConfirmation({ dialogTitle, assignment, customId}:
-    { dialogTitle: string; assignment: any; customId: string; }) {
+export default function DeleteConfirmation({ dialogTitle, assignment, customId, deleteAssignment }:
+    { dialogTitle: string; assignment: any; customId: string; deleteAssignment: (assignmentId: string) => void }) {
     const dispatch = useDispatch(); 
     return (
         <div id={customId} className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -19,7 +18,7 @@ export default function DeleteConfirmation({ dialogTitle, assignment, customId}:
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                             No </button>
-                        <button onClick={() => dispatch(deleteAssignment(assignment._id))} type="button" data-bs-dismiss="modal" className="btn btn-danger">
+                        <button onClick={() => deleteAssignment(assignment._id)} type="button" data-bs-dismiss="modal" className="btn btn-danger">
                             Yes </button>
                     </div>
                 </div>

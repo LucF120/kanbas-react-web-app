@@ -2,15 +2,28 @@ import { FaSearch } from "react-icons/fa";
 import { FaFilter } from "react-icons/fa";
 import { FaFileExport, FaFileImport } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
-import * as db from "../../Database";
 import { useParams } from "react-router";
+import * as client from "./client";
+import { useEffect, useState } from "react";
 
 export default function Grades() {
     const { cid } = useParams();
-    const users = db.users;
-    const enrollments = db.enrollments;
-    const grades = db.grades;
-    const assignments = db.assignments;
+    const [grades, setGrades] = useState<any[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
+    const [enrollments, setEnrollments] = useState<any[]>([]);
+    const [assignments, setAssignments] = useState<any[]>([]);
+
+    const getGrades = async () => {
+        const {grades, users, assignments, enrollments} = await client.getAllGrades();
+        setGrades(grades);
+        setUsers(users);
+        setEnrollments(enrollments);
+        setAssignments(assignments);
+    };
+    useEffect(() => {
+        getGrades();
+    }, []);
+
     return (
         <div>
             <div className="row">
@@ -87,7 +100,7 @@ export default function Grades() {
                                                 const assignmentGrades = grades.filter((grade) => grade.assignment === a._id);
                                                 const studentGrade = user ? assignmentGrades.find((grade) => grade.student === user._id) : undefined;
                                                 return (
-                                                    <td><input className="bg-light form-control text-center" value={`${studentGrade && studentGrade.grade}`} /></td>
+                                                    <td><input className="bg-light form-control text-center" value={`${studentGrade && studentGrade.grade || ""}`} /></td>
                                                 )
                                             })
                                         }
