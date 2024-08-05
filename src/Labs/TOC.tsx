@@ -9,8 +9,11 @@ export default function TOC() {
         <li className="nav-item"><a id="wd-a2" href="#/Labs/Lab2" className={`nav-link ${pathname.includes("Lab2") ? "active" : ""}`}>Lab 2</a></li>
         <li className="nav-item"><a id="wd-a3" href="#/Labs/Lab3" className={`nav-link ${pathname.includes("Lab3") ? "active" : ""}`}>Lab 3</a></li>
         <li className="nav-item"><a id="wd-a4" href="#/Labs/Lab4" className={`nav-link ${pathname.includes("Lab4") ? "active" : ""}`}>Lab 4</a></li>
+	<li className="nav-item"><a id="wd-a5" href="#/Labs/Lab5" className={`nav-link ${pathname.includes("Lab5") ? "active" : ""}`}>Lab 5</a></li>
         <li className="nav-item"><a id="wd-k" href="#/Kanbas" className="nav-link">Kanbas</a></li>
         <li className="nav-item"><a id="wd-github" href="https://github.com/LucF120/kanbas-react-web-app/" className="nav-link">GitHub</a></li>
+        <li className="nav-item"><a id="wd-server-github" href="https://github.com/LucF120/kanbas-node-server-app" className="nav-link">Server Github</a></li>
+        <li className="nav-item"><a id="wd-server" href="https://kanbas-node-server-app-tktp.onrender.com" className="nav-link">Server</a></li>
       </ul>
     );
   }

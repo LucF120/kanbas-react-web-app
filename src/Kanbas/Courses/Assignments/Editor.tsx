@@ -1,10 +1,9 @@
 import { useParams } from "react-router";
-import * as db from "../../Database";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
-
+import * as client from "./client";
 
 export default function AssignmentEditor() {
     const { cid, id } = useParams();
@@ -13,7 +12,7 @@ export default function AssignmentEditor() {
         assignments.find((assignment: any) => assignment._id === id)
         ||
         {
-            _id: new Date().getTime().toString(),
+            _id: id,
             title: "New Assignment Title",
             course: cid,
             description: "New Assignment Description",
@@ -23,8 +22,16 @@ export default function AssignmentEditor() {
             untilDate: "",
             newAssignment: true,
         });
+    
     const dispatch = useDispatch();
-
+    const createAssignment = async (assignment: any) => {
+        const newAssignment = await client.createAssignment(cid as string, assignment);
+        dispatch(addAssignment(newAssignment));
+    };
+    const saveAssignment = async (assignment: any) => {
+        await client.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+    };
     return (
         <div id="wd-assignments-editor">
             <div className="row">
@@ -162,11 +169,12 @@ export default function AssignmentEditor() {
                     Cancel
                 </Link>
                 <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-lg btn-danger ms-2" onClick={() => {
-                    if(assignment.newAssignment) {
-                        dispatch(addAssignment(assignment));
-                    } else {
-                        dispatch(updateAssignment(assignment));
-                    }
+                        if (assignment.newAssignment === true) {
+                            createAssignment({...assignment, newAssignment: false});
+                        }
+                        else {
+                            saveAssignment(assignment);
+                        }
                     }}>
                     Save
                 </Link>
