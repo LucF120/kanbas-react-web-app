@@ -4,8 +4,9 @@ import AssignmentEditor from "./Assignments/Editor";
 import Home from "./Home";
 import Modules from "./Modules";
 import CoursesNavigation from "./Navigation";
-import { Navigate, Route, Routes, useParams, useLocation} from "react-router";
+import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import Grades from "./Grades";
+import PeopleTable from "./People/Table";
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -20,7 +21,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <hr />
             <div className="row">
                 <div className="d-none d-sm-block col-sm-2">
-                <CoursesNavigation />
+                    <CoursesNavigation />
                 </div>
                 <div className="d-block col-sm-10">
                     <Routes>
@@ -33,6 +34,8 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Assignments/:id" element={<AssignmentEditor />} />
                         <Route path="Quizzes" element={<h2>Quizzes</h2>} />
                         <Route path="Grades" element={<Grades />} />
+                        <Route path="People" element={<PeopleTable />} />
+                        <Route path="People/:uid" element={<PeopleTable />} />
                     </Routes>
                 </div>
             </div>
