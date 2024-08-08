@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaPlus, FaUserCircle } from "react-icons/fa";
 import * as client from "./client";
 import PeopleDetails from "./Details";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 export default function PeopleTable() {
   const [users, setUsers] = useState<any[]>([]);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const createUser = async () => {
+    const user = await client.createUser({
+      firstName: "New",
+      lastName: `User${users.length + 1}`,
+      username: `newuser${Date.now()}`,
+      password: "password123",
+      section: "S101",
+      role: "STUDENT",
+      loginId: `00123456${new Date().getTime().toString()}S`,
+      lastActivity: new Date().getTime().toString(),
+      totalActivity: "00:00:00",
+      email: "",
+    });
+    setUsers([...users, user]);
+    navigate(`/Kanbas/Courses/${cid}/People/${user._id}`);
+  };
   const { cid } = useParams();
   const filterUsersByName = async (name: string) => {
     setName(name);
@@ -54,7 +71,11 @@ export default function PeopleTable() {
   }, []);
   return (
     <div id="wd-people-table">
-      <PeopleDetails />
+      <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
+        <FaPlus className="me-2" />
+        People
+      </button>
+      <PeopleDetails fetchUsers={fetchUsers} />
       <input type="text" onChange={(e) => filterUsersByNameAndRole(e.target.value, role)} placeholder="Search people"
         className="form-control float-start w-25 me-2 wd-filter-by-name" />
       <select value={role} onChange={(e) => filterUsersByNameAndRole(name, e.target.value)}
