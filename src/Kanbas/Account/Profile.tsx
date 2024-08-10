@@ -34,8 +34,9 @@ export default function Profile() {
                         onChange={(e) => setProfile({ ...profile, firstName: e.target.value })} />
                     <input className="wd-lastname form-control mb-2 w-25" value={profile.lastName}
                         onChange={(e) => setProfile({ ...profile, lastName: e.target.value })} />
-                    <input className="wd-dob form-control mb-2 w-25" value={profile.dob}
-                        onChange={(e) => setProfile({ ...profile, dob: e.target.value })} type="datetime-local" />
+                    <input className="wd-dob form-control mb-2 w-25" 
+                        value={profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : ''}
+                        onChange={(e) => setProfile({ ...profile, dob: e.target.value })} type="date" />
                     <input className="wd-email form-control mb-2 w-25" value={profile.email}
                         onChange={(e) => setProfile({ ...profile, email: e.target.value })} />
                     <select className="wd-role form-select mb-2 w-25" onChange={(e) => setProfile({ ...profile, role: e.target.value })}>
