@@ -28,4 +28,11 @@ const dateToString = (date: string) => {
     return months[monthNum-1] + " " + day + " at " + hourNum + ":" + minute + " " + timeOfDay;
 }
 
+export const dateTimeConvert = (date: string): string => {
+    const localDate = new Date(date);
+    const datePart = localDate.toLocaleDateString('sv-SE');
+    const timePart = localDate.toLocaleTimeString('sv-SE', { hour12: false });
+    return `${datePart}T${timePart}`;
+};
+
 export default dateToString;
