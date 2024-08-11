@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 import * as client from "./client";
+import { dateTimeConvert } from "./DateToString";
 
 export default function AssignmentEditor() {
     const { cid, id } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const currentDate = new Date();
+    let nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
     const [assignment, setAssignment] = useState<any>(
         assignments.find((assignment: any) => assignment._id === id)
         ||
@@ -17,12 +21,12 @@ export default function AssignmentEditor() {
             course: cid,
             description: "New Assignment Description",
             points: 100,
-            availableDate: "",
-            dueDate: "",
-            untilDate: "",
+            availableDate: currentDate.toISOString().slice(0, 16),
+            dueDate: nextWeek.toISOString().slice(0, 16),
+            untilDate: nextWeek.toISOString().slice(0, 16),
             newAssignment: true,
         });
-    
+
     const dispatch = useDispatch();
     const createAssignment = async (assignment: any) => {
         const newAssignment = await client.createAssignment(cid as string, assignment);
@@ -147,18 +151,18 @@ export default function AssignmentEditor() {
                         <label className="form-label mt-2" htmlFor="wd-assign-to">Assign to</label>
                         <input className="form-control" id="wd-assign-to" value="Everyone"></input>
                         <label className="form-label mt-2" htmlFor="wd-due-date">Due</label>
-                        <input className="form-control" type="datetime-local" id="wd-due-date" value={`${assignment && assignment.dueDate}`}
-                            onChange={(e) => setAssignment({ ...assignment, dueDate: e.target.value })} />
+                        <input className="form-control" type="datetime-local" id="wd-due-date" value={`${dateTimeConvert(assignment.dueDate)}`}
+                            onChange={(e) => setAssignment({ ...assignment, dueDate: e.target.value})} />
                         <div className="row">
                             <div className="col-6">
                                 <label className="form-label mt-2" htmlFor="wd-available-from">Available from</label>
-                                <input className="form-control" type="datetime-local" id="wd-available-from" value={`${assignment && assignment.availableDate}`}
-                                    onChange={(e) => setAssignment({ ...assignment, availableDate: e.target.value })} />
+                                <input className="form-control" type="datetime-local" id="wd-available-from" value={`${dateTimeConvert(assignment.availableDate)}`}
+                                    onChange={(e) => setAssignment({ ...assignment, availableDate: e.target.value})} />
                             </div>
                             <div className="col-6">
                                 <label className="form-label mt-2" htmlFor="wd-available-until">Until</label>
-                                <input className="form-control" type="datetime-local" id="wd-available-until" value={`${assignment && assignment.untilDate}`}
-                                    onChange={(e) => setAssignment({ ...assignment, untilDate: e.target.value })} />
+                                <input className="form-control" type="datetime-local" id="wd-available-until" value={`${dateTimeConvert(assignment.untilDate)}`}
+                                    onChange={(e) => setAssignment({ ...assignment, untilDate: e.target.value})} />
                             </div>
                         </div>
                     </div>
@@ -169,13 +173,13 @@ export default function AssignmentEditor() {
                     Cancel
                 </Link>
                 <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-lg btn-danger ms-2" onClick={() => {
-                        if (assignment.newAssignment === true) {
-                            createAssignment({...assignment, newAssignment: false});
-                        }
-                        else {
-                            saveAssignment(assignment);
-                        }
-                    }}>
+                    if (assignment.newAssignment === true) {
+                        createAssignment({ ...assignment, newAssignment: false });
+                    }
+                    else {
+                        saveAssignment(assignment);
+                    }
+                }}>
                     Save
                 </Link>
             </div>
