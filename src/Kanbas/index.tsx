@@ -14,9 +14,9 @@ import Session from "./Account/Session";
 export default function Kanbas() {
     const [courses, setCourses] = useState<any[]>([]);
     const [course, setCourse] = useState<any>({
-        _id: "0", name: "New Course", number: "New Number",
-        startDate: "2023-09-10", endDate: "2023-12-15",
-        image: "/images/reactjs.jpg", description: "New Description"
+        name: "New Course", 
+        description: "New Description",
+        image: "/images/reactjs.jpg", 
     });
     const fetchCourses = async () => {
         const courses = await client.fetchAllCourses();
@@ -25,28 +25,6 @@ export default function Kanbas() {
     useEffect(() => {
         fetchCourses();
     }, []);
-    const addNewCourse = async () => {
-        const newCourse = await client.createCourse(course);
-        setCourses([...courses, newCourse]);
-    };
-
-    const deleteCourse = async (courseId: string) => {
-        await client.deleteCourse(courseId);
-        setCourses(courses.filter((course) => course._id !== courseId));
-    };
-
-    const updateCourse = async () => {
-        await client.updateCourse(course);
-        setCourses(
-            courses.map((c) => {
-                if (c._id === course._id) {
-                    return course;
-                } else {
-                    return c;
-                }
-            })
-        );
-    };
 
     return (
         <Provider store={store}>
@@ -64,12 +42,8 @@ export default function Kanbas() {
                             <Route path="Dashboard" element={
                                 <ProtectedRoute>
                                     <Dashboard
-                                        courses={courses}
                                         course={course}
-                                        setCourse={setCourse}
-                                        addNewCourse={addNewCourse}
-                                        deleteCourse={deleteCourse}
-                                        updateCourse={updateCourse} />
+                                        setCourse={setCourse} />
                                 </ProtectedRoute>
                             } />
                             <Route path="Courses/:cid/*" element={
