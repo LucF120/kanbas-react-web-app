@@ -9,6 +9,7 @@ export default function Dashboard({ course, setCourse }: {
     const [userCourses, setUserCourses] = useState<any[]>([]);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const isFaculty = currentUser.role === "FACULTY";
+    const isStudent = currentUser.role === "STUDENT";
 
     const addNewCourse = async () => {
         const newCourse = await client.createCourse(course);
@@ -37,8 +38,6 @@ export default function Dashboard({ course, setCourse }: {
 
     const fetchCourseById = async (courseId: string) => {
         const course = await client.fetchCourseById(courseId);
-        console.log("Here is the course that was fetched:");
-        console.log(course);
         return course;
     };
     const fetchEnrollments = async () => {
@@ -48,7 +47,6 @@ export default function Dashboard({ course, setCourse }: {
             const course = await fetchCourseById(element.course);
             courses.push(course);
         }
-        console.log(courses);
         setUserCourses(courses);
     };
     useEffect(() => {
@@ -74,8 +72,12 @@ export default function Dashboard({ course, setCourse }: {
                         onChange={(e) => setCourse({ ...course, description: e.target.value })} /><hr />
                 </div>
             }
-
-
+            {isStudent && 
+                <div>
+                    <Link to="/Kanbas/Enrollments" className="btn btn-primary mb-2">Enroll in a Course</Link>
+                    <hr />
+                </div>
+            }
             <h2 id="wd-dashboard-published">Courses ({userCourses.length})</h2> <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">

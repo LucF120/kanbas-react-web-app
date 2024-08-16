@@ -16,6 +16,8 @@ import * as client from "./client";
 
 export default function Assignments() {
     const { cid } = useParams();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const isFaculty = currentUser.role === "FACULTY";
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const [assignment, setAssignment] = useState<any>({
         _id: new Date().getTime().toString(),
@@ -55,10 +57,10 @@ export default function Assignments() {
                 <ul id="wd-assignment-list" className="list-group rounded-0 border border-left-success">
                     <li className="list-group-item p-0 fs-5 border-gray">
                         <div className="wd-title p-3 ps-2 bg-secondary">
-                            <BsGripVertical className="me-2 fs-3" />
+                            {isFaculty && <BsGripVertical className="me-2 fs-3" />}
                             <IoMdArrowDropdown className="me-2 fs-3" />
                             ASSIGNMENTS
-                            <AssignmentsButtons />
+                            {isFaculty && <AssignmentsButtons />}
                         </div>
                     </li>
                     {assignments
@@ -68,13 +70,15 @@ export default function Assignments() {
                             return (
                                 <li className="wd-assignment-list-item list-group-item p-0 fs-5">
                                     <div className="wd-title p-3 ps-2 d-flex align-items-center">
-                                        <BsGripVertical className="me-4 fs-3" />
-                                        <FaEdit className="me-4 fs-3 text-success" />
+                                        {isFaculty && <BsGripVertical className="me-4 fs-3" />}
+                                        {isFaculty && <FaEdit className="me-4 fs-3 text-success" />}
                                         <div className="d-flex flex-grow-1 align-items-center ms-4">
                                             <div>
-                                                <a className="wd-assignment-link text-decoration-none enable-button-pointers" href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+                                                {isFaculty && <a className="wd-assignment-link text-decoration-none enable-button-pointers" href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
                                                     <h1 className="text-dark">{assignment.title}</h1>
                                                 </a>
+                                                || 
+                                                <h1 className="text-dark">{assignment.title}</h1>}
                                                 <span>
                                                     <span className="text-danger">{assignment.multipleModules ? "Multiple Modules " : "Single Module "}</span>
                                                     <span className="text-secondary">|</span>
@@ -87,10 +91,10 @@ export default function Assignments() {
                                                 </span>
                                             </div>
                                         </div>
-                                        <GreenCheckmark />
-                                        <FaTrash role="button" className="text-danger ms-5" data-bs-toggle="modal" data-bs-target={"#" + customId} />
-                                        <IoEllipsisVertical className="ms-5 fs-3" />
-                                        <DeleteConfirmation dialogTitle="Assignment Delete Confirmation" assignment={assignment} customId={customId} deleteAssignment={(assignmentId) => { removeAssignment(assignmentId); }} />
+                                        {isFaculty && <GreenCheckmark />}
+                                        {isFaculty && <FaTrash role="button" className="text-danger ms-5" data-bs-toggle="modal" data-bs-target={"#" + customId} />}
+                                        {isFaculty && <IoEllipsisVertical className="ms-5 fs-3" />}
+                                        {isFaculty && <DeleteConfirmation dialogTitle="Assignment Delete Confirmation" assignment={assignment} customId={customId} deleteAssignment={(assignmentId) => { removeAssignment(assignmentId); }} />}
                                     </div>
                                 </li>
                             );

@@ -10,6 +10,7 @@ import * as client from "./Courses/client";
 import Account from "./Account";
 import ProtectedRoute from "./ProtectedRoute";
 import Session from "./Account/Session";
+import Enrollments from "./Courses/Enrollments";
 
 export default function Kanbas() {
     const [courses, setCourses] = useState<any[]>([]);
@@ -49,6 +50,11 @@ export default function Kanbas() {
                             <Route path="Courses/:cid/*" element={
                                 <ProtectedRoute>
                                     <Courses courses={courses} />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="Enrollments" element={
+                                <ProtectedRoute>
+                                    <Enrollments courses={courses} />
                                 </ProtectedRoute>
                             } />
                             <Route path="Calendar" element={<h1>Calendar</h1>} />

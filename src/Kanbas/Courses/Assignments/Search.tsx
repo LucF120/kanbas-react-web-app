@@ -1,7 +1,10 @@
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export default function Search({ course, assignment}: {course: string | undefined ; assignment: any}) {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const isFaculty = currentUser.role === "FACULTY";
     return (
         <div className="text-nowrap d-flex ">
             <div className="input-group d-flex">
@@ -10,7 +13,7 @@ export default function Search({ course, assignment}: {course: string | undefine
                 </label>
                 <input id="wd-assignment-search" type="text" className="me-2 fs-3 ps-1 border border-1 border-start-0" placeholder="Search..."></input>
             </div>
-            <div className="d-flex me-1 float-end">
+            {isFaculty && <div className="d-flex me-1 float-end">
                 <button id="wd-add-assignment-group" className="btn btn-lg btn-light me-2">
                     <FaPlus className="me-1" />
                     Group</button>
@@ -19,7 +22,7 @@ export default function Search({ course, assignment}: {course: string | undefine
                         <FaPlus className="me-1" />
                         Assignment</button>
                 </a>
-            </div>
+            </div>}
         </div>
     );
 }

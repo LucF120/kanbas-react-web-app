@@ -7,12 +7,15 @@ import { MdGolfCourse } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { IoStatsChart } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 export default function CourseStatus() {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const isFaculty = currentUser.role === "FACULTY";
     return (
         <div id="wd-course-status" style={{ width: "300px" }}>
-            <h2>Course Status</h2>
-            <div className="d-flex">
+            {isFaculty && <h2>Course Status</h2>}
+            {isFaculty && <div className="d-flex">
                 <div className="w-50 pe-1">
                     <button className="btn btn-lg btn-secondary w-100 text-nowrap ">
                         <MdDoNotDisturbAlt className="me-2 fs-5" />
@@ -25,28 +28,28 @@ export default function CourseStatus() {
                         Publish
                     </button>
                 </div>
-            </div>
+            </div>}
             <br />
-            <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+            {isFaculty && <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <BiImport className="me-2 fs-5" />
                 Import Existing Content
-            </button>
-            <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+            </button>}
+            {isFaculty && <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <LiaFileImportSolid className="me-2 fs-5" />
                 Import from Commons
-            </button>
-            <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+            </button>}
+            {isFaculty && <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <FaHouse className="me-2 fs-5" />
                 Choose Home Page
-            </button>
+            </button>}
             <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <MdGolfCourse className="me-2 fs-5" />
                 View Course Screen
             </button>
-            <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+            {isFaculty && <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <TfiAnnouncement className="me-2 fs-5" />
                 New Announcement
-            </button>
+            </button>}
             <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
                 <IoStatsChart className="me-2 fs-5" />
                 New Analytics

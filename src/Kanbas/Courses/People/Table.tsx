@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaUserCircle } from "react-icons/fa";
 import * as client from "./client";
+import * as enrollmentClient from "../Enrollments/client";
 import PeopleDetails from "./Details";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function PeopleTable() {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser.role === "FACULTY";
   const [users, setUsers] = useState<any[]>([]);
+  const [enrollments, setEnrollments] = useState<any[]>([]);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -25,57 +30,52 @@ export default function PeopleTable() {
     navigate(`/Kanbas/Courses/${cid}/People/${user._id}`);
   };
   const { cid } = useParams();
-  const filterUsersByName = async (name: string) => {
-    setName(name);
-    if (name) {
-      const users = await client.findUsersByPartialName(name);
-      setUsers(users);
-    } else {
-      fetchUsers();
-    }
+
+  const getEnrollments = async () => {
+    const enrollments = await enrollmentClient.fetchEnrollmentsByCourse(cid || "");
+    return enrollments;
   };
-  const filterUsersByRole = async (role: string) => {
-    setRole(role);
-    if (role) {
-      const users = await client.findUsersByRole(role);
-      setUsers(users);
-    } else {
-      fetchUsers();
-    }
-  };
+
   const filterUsersByNameAndRole = async (name: string, role: string) => {
     setName(name);
     setRole(role);
+    let newUsers: any[] = [];
     if (name && role) {
-      const users = await client.findUsersByNameAndRole(name, role);
-      setUsers(users);
+      newUsers = await client.findUsersByNameAndRole(name, role);
+      const filteredNewUsers = newUsers.filter((u) => enrollments.find((e) => e.user === u._id));
+      setUsers(filteredNewUsers);
     }
     else if (name) {
-      const users = await client.findUsersByPartialName(name);
-      setUsers(users);
+      newUsers = await client.findUsersByPartialName(name);
+      const filteredNewUsers = newUsers.filter((u) => enrollments.find((e) => e.user === u._id));
+      setUsers(filteredNewUsers);
     }
     else if (role) {
-      const users = await client.findUsersByRole(role);
-      setUsers(users);
+      newUsers = await client.findUsersByRole(role);
+      const filteredNewUsers = newUsers.filter((u) => enrollments.find((e) => e.user === u._id));
+      setUsers(filteredNewUsers);
     } else {
       fetchUsers();
     }
   };
 
   const fetchUsers = async () => {
+    const enrollments = await getEnrollments();
     const users = await client.findAllUsers();
-    setUsers(users);
+    setEnrollments(enrollments);
+    const enrolledUsers = users.filter((u: any) => enrollments.find((e: any) => e.user === u._id));
+    setUsers(enrolledUsers);
   };
   useEffect(() => {
     fetchUsers();
   }, []);
   return (
     <div id="wd-people-table">
-      <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
+      {isFaculty && <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
         <FaPlus className="me-2" />
         People
-      </button>
-      <PeopleDetails fetchUsers={fetchUsers} />
+      </button>}
+      {isFaculty && <PeopleDetails fetchUsers={fetchUsers} />}
       <input type="text" onChange={(e) => filterUsersByNameAndRole(e.target.value, role)} placeholder="Search people"
         className="form-control float-start w-25 me-2 wd-filter-by-name" />
       <select value={role} onChange={(e) => filterUsersByNameAndRole(name, e.target.value)}

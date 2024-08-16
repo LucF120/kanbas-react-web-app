@@ -4,30 +4,62 @@ import { FaFileExport, FaFileImport } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { useParams } from "react-router";
 import * as client from "./client";
+import * as assignmentsClient from "../Assignments/client";
+import * as peopleClient from "../People/client";
+import * as enrollmentClient from "../Enrollments/client";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssignments } from "../Assignments/reducer";
 
 export default function Grades() {
     const { cid } = useParams();
+    const dispatch = useDispatch();
     const [grades, setGrades] = useState<any[]>([]);
     const [users, setUsers] = useState<any[]>([]);
     const [enrollments, setEnrollments] = useState<any[]>([]);
-    const [assignments, setAssignments] = useState<any[]>([]);
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const isFaculty = currentUser.role === "FACULTY";
+
+    const fetchAssignments = async () => {
+        const assignments = await assignmentsClient.findAssignmentsForCourse(cid as string);
+        dispatch(setAssignments(assignments));
+    };
+
+    const fetchUsers = async () => {
+        if (isFaculty) {
+            const users = await peopleClient.findAllUsers();
+            setUsers(users);
+        } else {
+            setUsers([currentUser]);
+        }
+
+    };
 
     const getGrades = async () => {
-        const {grades, users, assignments, enrollments} = await client.getAllGrades();
+        const { grades } = await client.getAllGrades();
         setGrades(grades);
-        setUsers(users);
-        setEnrollments(enrollments);
-        setAssignments(assignments);
+    };
+    const getEnrollments = async () => {
+        if(isFaculty) {
+            const enrollments = await enrollmentClient.fetchEnrollmentsByCourse(cid as string);
+            setEnrollments(enrollments);
+        } else {
+            setEnrollments([{user: currentUser._id, course: cid}])
+        }
+        
     };
     useEffect(() => {
         getGrades();
+        fetchAssignments();
+        fetchUsers();
+        getEnrollments();
     }, []);
 
     return (
         <div>
             <div className="row">
-                <div className="col-12 mb-4 d-flex justify-content-end">
+                {isFaculty && <div className="col-12 mb-4 d-flex justify-content-end">
                     <button className="btn btn-lg btn-secondary me-2">
                         <FaFileImport className="me-2" />
                         Import
@@ -39,9 +71,9 @@ export default function Grades() {
                     <button className="btn btn-lg btn-secondary">
                         <IoSettings />
                     </button>
-                </div>
+                </div>}
                 <div className="mb-4 d-flex">
-                    <div className="me-auto col-6">
+                    {isFaculty && <div className="me-auto col-6">
                         <h1>Student Names</h1>
                         <div className="input-group d-flex mb-3 flex-grow-1">
                             <label className="input-group-text bg-white border border-1 border-end-0" htmlFor="wd-student-search">
@@ -51,7 +83,7 @@ export default function Grades() {
                                 <option><span className="text-secondary">Search Students</span></option>
                             </select>
                         </div>
-                    </div>
+                    </div>}
                     <div className="justify-content-end col-6">
                         <h1 className="ms-5">Assignment Names</h1>
                         <div className="input-group d-flex mb-3">
@@ -76,8 +108,8 @@ export default function Grades() {
                         <tr>
                             <td>Student Name</td>
                             {assignments
-                                .filter((a) => a.course === cid)
-                                .map((a) => (
+                                .filter((a: any) => a.course === cid)
+                                .map((a: any) => (
                                     <td>
                                         {a.title}
                                         <br />
@@ -95,8 +127,8 @@ export default function Grades() {
                                     <tr>
                                         <td className="text-danger">{user && user.firstName} {user && user.lastName}</td>
                                         {assignments
-                                            .filter((a) => a.course === cid)
-                                            .map((a) => {
+                                            .filter((a: any) => a.course === cid)
+                                            .map((a: any) => {
                                                 const assignmentGrades = grades.filter((grade) => grade.assignment === a._id);
                                                 const studentGrade = user ? assignmentGrades.find((grade) => grade.student === user._id) : undefined;
                                                 return (

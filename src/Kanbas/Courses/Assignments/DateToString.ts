@@ -1,6 +1,6 @@
 // Convert YYYY-MM-DDTHH:MM to "Month Day at HH:MM (am/pm)"
 const dateToString = (date: string) => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     let month = date[5] + date[6];
     let monthNum = parseInt(month);
     let day = "";
