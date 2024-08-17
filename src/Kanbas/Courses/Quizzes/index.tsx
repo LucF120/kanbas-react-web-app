@@ -13,23 +13,23 @@ import Search from "./Search";
 import QuizContextMenu from "./QuizContextMenu";
 import { Link } from "react-router-dom";
 import NotPublished from "./NotPublished";
+import { nowInEST } from "./ConvertToEST";
 export default function Quizzes() {
     const { cid } = useParams();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const isFaculty = currentUser.role === "FACULTY";
     const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-    // Get the current date
-    let now = new Date();
-    // Create a new date object for one week from today
-    let oneWeekFromNow = new Date(now);
-    oneWeekFromNow.setDate(now.getDate() + 7);
+    
+    const nowEST = nowInEST();
+    let oneWeekFromNow = new Date(nowEST);
+    oneWeekFromNow.setDate(nowEST.getDate() + 7);
 
     const quiz = {
         name: "New Quiz",
         course: cid,
         description: "",
         questions: [],
-        availableDate: now.toISOString(),
+        availableDate: nowEST.toISOString(),
         dueDate: oneWeekFromNow.toISOString(),
         untilDate: oneWeekFromNow.toISOString(),
         published: false,
@@ -46,10 +46,6 @@ export default function Quizzes() {
         lockQuestionAfterAnswering: false,
     };
     const calculateAvailability = (quiz: any) => {
-        const nowUTC = new Date();
-        const estOffset = -5 * 60 * 60 * 1000;
-        const nowEST = new Date(nowUTC.getTime() + estOffset);
-
         const currentDate = nowEST.toISOString();
         const availableDate = quiz.availableDate;
         const availableUntilDate = quiz.untilDate;
@@ -61,8 +57,8 @@ export default function Quizzes() {
             return <b>Available</b>;
         }
         if (currentDate < availableDate) {
-            return <span><b>Not available until </b> {DateToString(availableDate)}</span>; 
-        }  
+            return <span><b>Not available until </b> {DateToString(availableDate)}</span>;
+        }
     };
 
     const calculatePoints = (quiz: any) => {

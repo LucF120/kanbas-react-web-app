@@ -15,12 +15,12 @@ export default function QuizEditor() {
     const dispatch = useDispatch();
     const calculatePoints = (quiz: any) => {
         const questions = quiz.questions;
-        let points = 0;
+        let points: Number = 0;
         for (const question of questions) {
-            points = points + question.points;
+            points = Number(points) + Number(question.points);
         }
 
-        return points;
+        return Number(points);
     };
     const saveQuiz = async (quiz: any) => {
         await client.updateQuiz(quiz);
@@ -31,6 +31,7 @@ export default function QuizEditor() {
         const quiz = await client.fetchQuizById(qid);
         setQuiz(quiz);
     };
+
     useEffect(() => {
         fetchQuiz(qid as string);
     }, []);
@@ -39,7 +40,7 @@ export default function QuizEditor() {
             {quiz &&
                 <div>
                     <div className="d-inline float-end">
-                        <span className="me-4">Points {calculatePoints(quiz)}</span>
+                        <span className="me-4">Points {Number(calculatePoints(quiz))}</span>
                         {!quiz.published &&
                             <span className="text-secondary">
                                 <CiNoWaitingSign className="text-secondary mb-1 me-1" />

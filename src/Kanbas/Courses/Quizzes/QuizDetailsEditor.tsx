@@ -115,15 +115,17 @@ export default function QuizDetailsEditor({ quiz, setQuiz, saveQuiz }: { quiz: a
                         <div className="col-5 mt-4 ms-2 mb-2 border rounded p-2">
                             <div className="row p-4">
                                 <label className="col-12 text-dark" htmlFor="wd-due-date"><b>Due</b></label>
-                                <input type="datetime-local" className="col-12 form-control mb-4" id="wd-due-date" value={dateTimeConvert(quiz.dueDate)}
-                                    onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value })} />
+                                <input type="datetime-local" className="col-12 form-control mb-4" id="wd-due-date" value={quiz.dueDate.substring(0, 19)}
+                                    onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value + ".000Z" })} />
                                 <label className="col-6 form-label" htmlFor="wd-available-date"><b>Available from</b></label>
                                 <label className="col-6 form-label" htmlFor="wd-until-date"><b>Until</b></label>
                                 <div className="col-12 d-inline-flex">
-                                    <input type="datetime-local" className="form-control w-50 mb-4 me-2" id="wd-available-date" value={dateTimeConvert(quiz.availableDate)}
-                                        onChange={(e) => setQuiz({ ...quiz, availableDate: e.target.value })} />
-                                    <input type="datetime-local" className="form-control w-50 mb-4" id="wd-until-date" value={dateTimeConvert(quiz.untilDate)}
-                                        onChange={(e) => setQuiz({ ...quiz, untilDate: e.target.value })} />
+                                    <input type="datetime-local" className="form-control w-50 mb-4 me-2" id="wd-available-date" value={quiz.availableDate.substring(0, 19)}
+                                        onChange={(e) => setQuiz({ ...quiz, availableDate: e.target.value + ".000Z"})} />
+                                    <input type="datetime-local" className="form-control w-50 mb-4" id="wd-until-date" value={quiz.untilDate.substring(0, 19)}
+                                        onChange={(e) => {
+                                            console.log(e.target.value);
+                                            setQuiz({ ...quiz, untilDate: e.target.value + ".000Z" })}} />
                                 </div>
                             </div>
                         </div>
