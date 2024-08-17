@@ -1,3 +1,9 @@
 .light-green-background {
     color: #8fdaa8;
 }
+
+#wd-edit-quiz-navigation > a {
+    color: black;
+    background-color: white;
+    border-bottom: 0px !important;
+  }

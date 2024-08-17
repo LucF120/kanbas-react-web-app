@@ -27,16 +27,31 @@ export default function Signup() {
             <h1>Sign up</h1>
             {error && <div className="wd-error alert alert-danger">{error}</div>}
             <input value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })}
-                className="wd-username form-control mb-2 w-25" placeholder="username" />
+                className="wd-username form-control mb-2 w-25" placeholder="username" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signup(); }
+                }} />
             <input value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} type="password"
-                className="wd-password form-control mb-2 w-25" placeholder="password" />
+                className="wd-password form-control mb-2 w-25" placeholder="password" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signup(); }
+                }} />
             <input value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })}
-                className="wd-firstname form-control mb-2 w-25" placeholder="first name" />
+                className="wd-firstname form-control mb-2 w-25" placeholder="first name" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signup(); }
+                }} />
             <input value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-                className="wd-firstname form-control mb-2 w-25" placeholder="last name" />
+                className="wd-firstname form-control mb-2 w-25" placeholder="last name" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signup(); }
+                }} />
             <select value={user.role}
                 onChange={(e) => setUser({ ...user, role: e.target.value })}
-                className="wd-role form-select mb-2 w-25">
+                className="wd-role form-select mb-2 w-25"
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signup(); }
+                }} >
                 <option value="STUDENT">Student</option>
                 <option value="FACULTY">Faculty</option>
             </select>

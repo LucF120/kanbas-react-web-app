@@ -15,17 +15,24 @@ export default function Signin() {
             navigate("/Kanbas/Account/Profile");
         } catch (err: any) {
             setError(err.response.data.message);
-        }  
+        }
     };
     return (
         <div id="wd-signin-screen" className="container">
             <h1>Sign in</h1>
             {error && <div className="wd-error alert alert-danger">{error}</div>}
             <input id="wd-username" onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-                value={credentials.username} className="form-control mb-2 w-25" placeholder="username" />
+                value={credentials.username} className="form-control mb-2 w-25" placeholder="username" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signin(); }
+                }} />
             <input id="wd-password" onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-                value={credentials.password} className="form-control mb-2 w-25" placeholder="password" type="password" />
-            <button id="wd-signin-btn" onClick={signin} className="btn btn-primary w-25 mb-2"> Sign in </button>
+                value={credentials.password} className="form-control mb-2 w-25" placeholder="password" type="password" 
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {signin(); }
+                }} />
+            <button id="wd-signin-btn" onClick={signin} 
+                className="btn btn-primary w-25 mb-2"> Sign in </button>
             <br />
             <Link id="wd-signup-link" to="/Kanbas/Account/Signup">Sign up</Link>
         </div>

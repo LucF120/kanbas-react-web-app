@@ -72,11 +72,23 @@ export default function QuizDetails() {
             </div>}
 
             {!isFaculty && <div className="d-flex justify-content-center">
-                <button className="btn btn-lg btn-danger mb-4">Start Quiz</button>
+                <button className="btn btn-lg btn-secondary me-4 mb-4"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/Kanbas/Courses/${cid}/Quizzes`);
+                    }}>
+                    Back</button>
+                <button className="btn btn-lg btn-danger me-4 mb-4">Start Quiz</button>
                 <hr />
             </div>}
             {isFaculty &&
                 <div className="d-flex justify-content-center">
+                    <button className="btn btn-lg btn-secondary me-4"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/Kanbas/Courses/${cid}/Quizzes`);
+                        }}>
+                        Back</button>
                     <button className="btn btn-lg btn-secondary me-4"
                         onClick={(e) => {
                             e.preventDefault();
@@ -90,7 +102,7 @@ export default function QuizDetails() {
                         }}>
                         <PiPencilLight className="me-2" />
                         Edit
-                        </button>
+                    </button>
                 </div>
             }
 

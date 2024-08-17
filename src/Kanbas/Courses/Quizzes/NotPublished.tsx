@@ -1,6 +1,6 @@
 import { CiNoWaitingSign } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
-export default function GreenCheckmark() {
+export default function NotPublished() {
     return (
         <span className="me-1 position-relative">
             <CiNoWaitingSign style={{ top: "2px" }}

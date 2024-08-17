@@ -7,12 +7,12 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import DateToString from "../Assignments/DateToString";
 import GreenCheckmark from "../Assignments/GreenCheckmark";
 import { IoEllipsisVertical } from "react-icons/io5";
-import LightGreenCheckmark from "./LightGreenCheckmark";
 import { RxRocket } from "react-icons/rx";
 import "./index.css";
 import Search from "./Search";
 import QuizContextMenu from "./QuizContextMenu";
 import { Link } from "react-router-dom";
+import NotPublished from "./NotPublished";
 export default function Quizzes() {
     const { cid } = useParams();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -27,6 +27,7 @@ export default function Quizzes() {
     const quiz = {
         name: "New Quiz",
         course: cid,
+        description: "",
         questions: [],
         availableDate: now.toISOString(),
         dueDate: oneWeekFromNow.toISOString(),
@@ -51,7 +52,7 @@ export default function Quizzes() {
 
         const currentDate = nowEST.toISOString();
         const availableDate = quiz.availableDate;
-        const availableUntilDate = quiz.availableUntilDate;
+        const availableUntilDate = quiz.untilDate;
 
         if (currentDate > availableUntilDate) {
             return <b>Closed</b>;
@@ -98,7 +99,7 @@ export default function Quizzes() {
 
     return (
         <div id="wd-quizzes">
-            <Search course={cid} quiz={quiz} /><br /><br />
+            <Search course={cid as string} quiz={quiz} /><br /><br />
             <ul id="wd-quizzes-list" className="list-group rounded-0 border border-left-success">
                 <li className="list-group-item p-0 fs-5">
                     <div className="wd-title p-3 ps-2 bg-secondary d-flex">
@@ -134,7 +135,7 @@ export default function Quizzes() {
                                         </div>
                                     </div>
                                     {isFaculty && quiz.published && <GreenCheckmark />}
-                                    {isFaculty && !quiz.published && <LightGreenCheckmark />}
+                                    {isFaculty && !quiz.published && <NotPublished />}
                                     {isFaculty &&
                                         <IoEllipsisVertical className="ms-5 fs-3" style={{ cursor: "pointer" }} data-bs-toggle="modal" data-bs-target={`#${quizContextId}`} />
                                     }
