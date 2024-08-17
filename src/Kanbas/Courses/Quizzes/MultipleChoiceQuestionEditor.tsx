@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
-export default function MultipleChoiceQuestionEditor({ customId, q, quiz, setQuiz, saveQuiz }: { customId: string; q: any; quiz: any; setQuiz: (quiz: any) => void; saveQuiz: (quiz: any) => void; }) {
-    console.log(customId);
+export default function MultipleChoiceQuestionEditor({ qid, q, quiz, setQuiz }: { qid: string; q: any; quiz: any; setQuiz: (quiz: any) => void; }) {
     const [question, setQuestion] = useState<any>();
 
     const createAnswer = () => {
@@ -12,30 +11,35 @@ export default function MultipleChoiceQuestionEditor({ customId, q, quiz, setQui
     const cancelEdit = () => {
         setQuiz({
             ...quiz, questions: quiz.questions.map((question: any) =>
-                question._id === q._id ? { ...question, editing: false } : question
+                ((question._id === qid) || (question.tempId === qid)) ? { ...question, editing: false, tempAnswerType: null } : question
             )
-        })
+        });
     };
 
     const updateQuestion = () => {
         const updatedQuestions = quiz.questions.map((que: any) =>
-            que._id === question._id ? { ...question, editing: false } : que);
+            ((que._id === qid) || (que.tempId === qid)) ? { ...question, editing: false, answerType: question.tempAnswerType || question.answerType } : que);
         const updatedQuiz = { ...quiz, questions: updatedQuestions };
-        saveQuiz(updatedQuiz);
         setQuiz(updatedQuiz);
     };
-
+    const changeAnswerType = (type: string) => {
+        const updatedQuestions = quiz.questions.map((que: any) => ((que._id === qid) || (que.tempId === qid)) ? { ...question, tempAnswerType: type } : que);
+        const updatedQuiz = { ...quiz, questions: updatedQuestions };
+        setQuiz(updatedQuiz);
+    };
     useEffect(() => {
         setQuestion(q);
     }, []);
 
     return (
-        <div id={customId} className="container border p-4 mt-4 mb-4">
+        <div id={`wd-multiple-choice-editor-${qid}`} className="container border p-4 mt-4 mb-4">
             {question &&
                 <div className="row">
                     <div className="col-6 d-flex">
                         <input className="form-control me-2" value={question.title} onChange={(e) => setQuestion({ ...question, title: e.target.value })}></input>
-                        <select className="form-select" value={question.answerType} onChange={(e) => setQuestion({ ...question, answerType: e.target.value })}>
+                        <select className="form-select" value={question.tempAnswerType || question.answerType} onChange={(e) => {
+                            changeAnswerType(e.target.value)
+                        }}>
                             <option>Multiple Choice</option>
                             <option>True/False</option>
                             <option>Fill In the Blank</option>
@@ -63,13 +67,13 @@ export default function MultipleChoiceQuestionEditor({ customId, q, quiz, setQui
                     {question.answerOptions && question.answerOptions.map((a: any, index: Number) => (
                         <div className="row col-12">
                             <div className="col-1 mb-4 pt-2">
-                                <input className="form-check-input" type="radio" name={`wd-possible-answer-${question._id}`} checked={index === question.correctAnswer}
+                                <input className="form-check-input" type="radio" name={`wd-possible-answer-${qid}`} id={`wd-possible-answer-${qid}-${index}`} checked={index === question.correctAnswer}
                                     onChange={(e) => setQuestion({ ...question, correctAnswer: index })}
                                 />
                             </div>
                             <div className="col-2 mb-4 justify-content-end pt-1">
-                                {question.correctAnswer === index && <span className="text-success"><b>Correct Answer</b></span>}
-                                {question.correctAnswer !== index && <span>Possible Answer</span>}
+                                {question.correctAnswer === index && <label className="form-label text-success" htmlFor={`wd-possible-answer-${qid}-${index}`}><b>Correct Answer</b></label>}
+                                {question.correctAnswer !== index && <label className="form-label" htmlFor={`wd-possible-answer-${qid}-${index}`}>Possible Answer</label>}
                             </div>
                             <div className="col-9 mb-4 d-flex">
                                 <input className="form-control w-50 me-2" value={a} onChange={
@@ -98,10 +102,8 @@ export default function MultipleChoiceQuestionEditor({ customId, q, quiz, setQui
                         </div>
                     ))}
                     <div className="col-12 text-end mb-4">
-                        <div style={{ cursor: "pointer" }} onClick={createAnswer}>
-                            <FaPlus className="text-danger me-2" />
-                            <span className="text-danger">Add Another Answer</span>
-                        </div>
+                        <FaPlus className="text-danger me-2" style={{ cursor: "pointer" }} onClick={createAnswer} />
+                        <span className="text-danger" style={{ cursor: "pointer" }} onClick={createAnswer}>Add Another Answer</span>
                     </div>
                     <div className="col-12 text-start mb-4">
                         <button className="btn btn-lg btn-secondary me-2" onClick={cancelEdit}>Cancel</button>
