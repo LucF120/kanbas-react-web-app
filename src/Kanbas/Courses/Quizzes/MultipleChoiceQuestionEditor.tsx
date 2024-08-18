@@ -76,7 +76,7 @@ export default function MultipleChoiceQuestionEditor({ qid, q, quiz, setQuiz }: 
                                 {question.correctAnswer !== index && <label className="form-label" htmlFor={`wd-possible-answer-${qid}-${index}`}>Possible Answer</label>}
                             </div>
                             <div className="col-9 mb-4 d-flex">
-                                <input className="form-control w-50 me-2" value={a} onChange={
+                                <textarea className="form-control w-50 me-2" value={a} onChange={
                                     (e) => {
                                         setQuestion({
                                             ...question,

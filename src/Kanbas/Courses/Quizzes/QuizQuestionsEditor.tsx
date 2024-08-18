@@ -21,11 +21,14 @@ export default function QuizQuestionsEditor({ quiz, setQuiz, saveQuiz }:
             correctAnswer: 2,
             correctWrittenAnswers: [""],
             tempId: new Date().getTime().toString(),
+            editing: true,
         };
 
         const updatedQuestions = [...quiz.questions, newQuestion];
         const updatedQuiz = { ...quiz, questions: updatedQuestions };
         setQuiz(updatedQuiz);
+
+        return newQuestion.tempId;
     };
 
     const deleteQuestion = async (questionId: string) => {
