@@ -27,7 +27,7 @@ export default function Quizzes() {
     const quiz = {
         name: "New Quiz",
         course: cid,
-        description: "",
+        description: "<p>New Description</p>",
         questions: [],
         availableDate: nowEST.toISOString(),
         dueDate: oneWeekFromNow.toISOString(),

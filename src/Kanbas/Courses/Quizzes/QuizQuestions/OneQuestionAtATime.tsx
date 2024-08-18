@@ -5,7 +5,7 @@ import OpenEndedQuestion from "./OpenEndedQuestion";
 import { FaQuestionCircle } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 
-export default function OneQuestionAtATime({ quiz }: { quiz: any }) {
+export default function OneQuestionAtATime({ quiz, sanitizeHTML }: { quiz: any; sanitizeHTML: (html: any) => any;  }) {
     const [question, setQuestion] = useState<any>();
     const [questionIndex, setQuestionIndex] = useState<any>();
     useEffect(() => {
@@ -31,9 +31,7 @@ export default function OneQuestionAtATime({ quiz }: { quiz: any }) {
                                 <div className="col-6 text-end bg-secondary">
                                     <h3 className="mb-2 mt-2">{question.points} pts</h3>
                                 </div>
-                                <div className="col-12 mt-4 mb-4 text-left">
-                                    <p className="mb-2">{question.question}</p>
-                                </div>
+                                <div className="col-12 mt-4 mb-4 text-left" dangerouslySetInnerHTML={sanitizeHTML(question.question)} />
                                 <div className="mb-2 col-12">
                                     {question.answerType === "Multiple Choice" &&
                                         <MultipleChoiceQuestion question={question} />

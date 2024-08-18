@@ -5,7 +5,6 @@ import { updateQuiz } from "./reducer";
 import MultipleChoiceQuestionEditor from "./MultipleChoiceQuestionEditor";
 import TrueFalseQuestionEditor from "./TrueFalseQuestionEditor";
 import OpenEndedQuestionEditor from "./OpenEndedQuestionEditor";
-import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
 export default function QuizQuestionsEditor({ quiz, setQuiz, saveQuiz }:
     { quiz: any; setQuiz: (quiz: any) => void; saveQuiz: (quiz: any) => void; }) {

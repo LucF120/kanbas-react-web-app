@@ -1,8 +1,17 @@
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import "./index.css";
+import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from 'draft-js-import-html';
 import { useEffect, useState } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
 export default function MultipleChoiceQuestionEditor({ qid, q, quiz, setQuiz }: { qid: string; q: any; quiz: any; setQuiz: (quiz: any) => void; }) {
     const [question, setQuestion] = useState<any>();
+    const [editorState, setEditorState] = useState(
+        () => EditorState.createEmpty(),
+    );
 
     const createAnswer = () => {
         setQuestion({ ...question, answerOptions: [...question.answerOptions, ""] });
@@ -30,6 +39,30 @@ export default function MultipleChoiceQuestionEditor({ qid, q, quiz, setQuiz }: 
     useEffect(() => {
         setQuestion(q);
     }, []);
+
+    useEffect(() => {
+        if (question) {
+            try {
+                const contentState = stateFromHTML(question.question);
+                const newEditorState = EditorState.createWithContent(contentState);
+                const oldHTML = stateToHTML(editorState.getCurrentContent());
+                const newHTML = stateToHTML(newEditorState.getCurrentContent());
+                if (oldHTML !== newHTML) {
+                    setEditorState(newEditorState);
+                }
+            }
+            catch (error) {
+                console.error('Error converting raw content to EditorState:', error);
+            }
+        }
+    }, [question]);
+
+    const handleEditorStateChange = (newEditorState: any) => {
+        // Convert EditorState to plain text and update quiz.description
+        const html = stateToHTML(newEditorState.getCurrentContent());
+        setQuestion({ ...question, question: html });
+        setEditorState(newEditorState);
+    };
 
     return (
         <div id={`wd-multiple-choice-editor-${qid}`} className="container border p-4 mt-4 mb-4">
@@ -59,7 +92,22 @@ export default function MultipleChoiceQuestionEditor({ qid, q, quiz, setQuiz }: 
                         <h4>Question:</h4>
                     </div>
                     <div className="col-12 mb-4">
-                        <textarea className="form-control" value={question.question} onChange={(e) => setQuestion({ ...question, question: e.target.value })} />
+                        <Editor
+                            editorState={editorState}
+                            onEditorStateChange={handleEditorStateChange}
+                            wrapperClassName="wrapper-class"
+                            editorClassName="editor-class"
+                            toolbarClassName="toolbar-class"
+                            toolbar={{
+                                options: ['inline', 'blockType', 'list'],
+                                inline: {
+                                    options: ['bold', 'italic', 'underline'],
+                                },
+                                blockType: {
+                                    options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+                                },
+                            }}
+                        />
                     </div>
                     <div className="col-12 mb-4 text-start">
                         <h4>Answers:</h4>

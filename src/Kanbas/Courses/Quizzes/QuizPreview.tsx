@@ -6,12 +6,20 @@ import dateToString from "../Assignments/DateToString";
 import { nowInEST } from "./ConvertToEST";
 import ListQuestions from "./QuizQuestions/ListQuestions";
 import OneQuestionAtATime from "./QuizQuestions/OneQuestionAtATime";
+import DOMPurify from "dompurify";
+
 export default function QuizPreview() {
     const { qid } = useParams();
     const [quiz, setQuiz] = useState<any>();
     const fetchQuiz = async (qid: string) => {
         const quiz = await client.fetchQuizById(qid);
         setQuiz(quiz);
+    };
+
+    const sanitizeHTML = (html: any) => {
+        return {
+            __html: DOMPurify.sanitize(html)
+        }
     };
 
     useEffect(() => {
@@ -27,12 +35,12 @@ export default function QuizPreview() {
                         <span className="text-danger">This is a preview of the published version of the quiz</span>
                     </div>
                     <div className="mb-4">
-                        <h1 className="mb-2">Quiz Instructions</h1>
-                        <span className="mb-2">{quiz.description}</span>
+                        <h1 className="mb-4">Quiz Instructions</h1>
+                        <div className="mt-4 mb-2" dangerouslySetInnerHTML={sanitizeHTML(quiz.description)} />
                         <hr />
                     </div>
-                    {!quiz.oneQuestionAtATime && <ListQuestions quiz={quiz} />}
-                    {quiz.oneQuestionAtATime && <OneQuestionAtATime quiz={quiz} />}
+                    {!quiz.oneQuestionAtATime && <ListQuestions quiz={quiz} sanitizeHTML={sanitizeHTML} />}
+                    {quiz.oneQuestionAtATime && <OneQuestionAtATime quiz={quiz} sanitizeHTML={sanitizeHTML} />}
                 </div>
             }
         </div >

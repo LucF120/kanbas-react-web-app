@@ -2,8 +2,22 @@
     color: #8fdaa8;
 }
 
-#wd-edit-quiz-navigation > a {
+#wd-edit-quiz-navigation>a {
     color: black;
     background-color: white;
     border-bottom: 0px !important;
-  }
+}
+
+.wrapper-class {
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+
+.editor-class {
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+
+.toolbar-class {
+    border: 1px solid #ccc;
+}

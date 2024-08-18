@@ -2,7 +2,7 @@ import MultipleChoiceQuestion from "./MultipleChoiceQuestion";
 import OpenEndedQuestion from "./OpenEndedQuestion";
 import TrueFalseQuestion from "./TrueFalseQuestion";
 
-export default function ListQuestions({ quiz }: { quiz: any }) {
+export default function ListQuestions({ quiz, sanitizeHTML }: { quiz: any; sanitizeHTML: (html: any) => any; }) {
     return (
         <div className="row">
             <div className="col-12">
@@ -14,9 +14,7 @@ export default function ListQuestions({ quiz }: { quiz: any }) {
                         <div className="col-6 text-end bg-secondary">
                             <h3 className="mb-2 mt-2">{q.points} pts</h3>
                         </div>
-                        <div className="col-12 mt-4 mb-4 text-left">
-                            <p className="mb-2">{q.question}</p>
-                        </div>
+                        <div className="col-12 mt-4 mb-4 text-left" dangerouslySetInnerHTML={sanitizeHTML(q.question)} />
                         <div className="mb-2">
                             {q.answerType === "Multiple Choice" &&
                                 <MultipleChoiceQuestion question={q} />

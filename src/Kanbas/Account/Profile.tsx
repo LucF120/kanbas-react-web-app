@@ -18,8 +18,8 @@ export default function Profile() {
         try {
             await client.updateProfile(profile._id, profile);
             dispatch(setCurrentUser(profile));
-        } catch (error: any) {
-            setErrorMessage("Error updating profile information.");
+        } catch (err: any) {
+            setErrorMessage(err.response.data.message);
         }
 
     };
