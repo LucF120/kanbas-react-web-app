@@ -13,6 +13,7 @@ export default function QuizEditor() {
     const [quiz, setQuiz] = useState<any>();
     const { pathname } = useLocation();
     const dispatch = useDispatch();
+    const [updatePage, setUpdatePage] = useState(0);
     const calculatePoints = (quiz: any) => {
         const questions = quiz.questions;
         let points: Number = 0;
@@ -27,6 +28,7 @@ export default function QuizEditor() {
         await client.updateQuiz(quiz);
         dispatch(updateQuiz(quiz));
         await fetchQuiz(quiz._id);
+        setUpdatePage(updatePage+1);
     };
 
     const fetchQuiz = async (qid: string) => {
@@ -36,7 +38,7 @@ export default function QuizEditor() {
 
     useEffect(() => {
         fetchQuiz(qid as string);
-    }, []);
+    }, [updatePage]);
     return (
         <div id="quiz-editor">
             {quiz &&
