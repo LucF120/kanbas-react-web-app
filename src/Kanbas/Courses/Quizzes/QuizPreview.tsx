@@ -23,7 +23,7 @@ export default function QuizPreview() {
     const fetchQuiz = async (qid: string) => {
         const quiz = await client.fetchQuizById(qid);
         setQuiz(quiz);
-        if (quiz && previouslyCompletedQuiz(quiz) && completed) {
+        if (quiz && previouslyCompletedQuiz(quiz) && completed && !isFaculty) {
             const previouslyCompletedQuizAttempt = previouslyCompletedQuiz(quiz);
             setQuizSubmission(previouslyCompletedQuizAttempt);
         } else {
@@ -49,7 +49,7 @@ export default function QuizPreview() {
     const restartQuiz = async (qid: string, restart: boolean) => {
         const quiz = await client.fetchQuizById(qid);
         setQuiz(quiz);
-        if (quiz && previouslyCompletedQuiz(quiz) && !restart) {
+        if (quiz && previouslyCompletedQuiz(quiz) && !restart && !isFaculty) {
             const previouslyCompletedQuizAttempt = previouslyCompletedQuiz(quiz);
             setQuizSubmission(previouslyCompletedQuizAttempt);
         } else {
