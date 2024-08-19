@@ -15,15 +15,18 @@ export default function Signup() {
             try {
                 const currentUser = await client.signup(user);
                 dispatch(setCurrentUser(currentUser));
-                if (currentUser.role === "STUDENT") {
-                    const courses = await coursesClient.fetchAllCourses();
-                    if (courses) {
-                        await enrollmentsClient.createEnrollment({
-                            user: currentUser._id,
-                            course: courses[0]._id,
-                        });
+                if (currentUser) {
+                    if (currentUser.role === "STUDENT") {
+                        const courses = await coursesClient.fetchAllCourses();
+                        if (courses) {
+                            await enrollmentsClient.createEnrollment({
+                                user: currentUser._id,
+                                course: courses[0]._id,
+                            });
+                        }
                     }
                 }
+
                 navigate("/Kanbas/Account/Profile");
             } catch (err: any) {
                 setError(err.response.data.message);
