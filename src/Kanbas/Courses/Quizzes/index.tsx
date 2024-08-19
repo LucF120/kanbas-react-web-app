@@ -30,17 +30,7 @@ export default function Quizzes() {
         name: "New Quiz",
         course: cid,
         description: "<p>New Description</p>",
-        questions: [
-            {
-                title: "Question 1",
-                question: "",
-                points: 10,
-                answerType: "Multiple Choice",
-                answerOptions: ["A", "B", "C", "D"],
-                correctAnswer: 2,
-                editing: true
-            },
-        ],
+        questions: [],
         availableDate: nowEST,
         dueDate: oneWeekFromNow,
         untilDate: oneWeekFromNow,
