@@ -22,18 +22,11 @@ export default function QuizEditor() {
 
         return Number(points);
     };
-    const fetchQuizzes = async () => {
-        const quizzes = await client.findQuizzesForCourse(cid as string);
-        dispatch(setQuizzes(quizzes));
-    };
-    
+
     const saveQuiz = async (quiz: any) => {
         await client.updateQuiz(quiz);
         dispatch(updateQuiz(quiz));
-        const quizzes = await client.findQuizzesForCourse(cid as string);
-        if(quizzes) {
-            dispatch(setQuizzes([...quizzes, quiz]));
-        }
+        await fetchQuiz(quiz._id);
     };
 
     const fetchQuiz = async (qid: string) => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import * as client from "./client";
 import { useSelector } from "react-redux";
-import DateToString from "../Assignments/DateToString";
+import DateToString, { dateTimeConvert } from "../Assignments/DateToString";
 import { PiPencilLight } from "react-icons/pi";
 
 export default function QuizDetails() {

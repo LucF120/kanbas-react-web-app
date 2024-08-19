@@ -15,7 +15,7 @@ const dateToString = (date: string) => {
     let minute = date[14] + date[15];
     let hourNum = parseInt(hour);
     let timeOfDay = "";
-    if (hourNum >= 12) {
+    if (hourNum > 12) {
         timeOfDay = "pm";
         hourNum = hourNum - 12;
     } else {
