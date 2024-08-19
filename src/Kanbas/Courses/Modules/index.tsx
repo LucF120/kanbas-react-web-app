@@ -55,7 +55,7 @@ export default function Modules() {
                 setModuleName={setModuleName}
                 moduleName={moduleName}
                 addModule={() => {
-                    createModule({ name: moduleName, course: cid });
+                    createModule({ name: moduleName || "New Module", course: cid });
                     setModuleName("");
                 }} />
             <br /><br /><br /><br />
