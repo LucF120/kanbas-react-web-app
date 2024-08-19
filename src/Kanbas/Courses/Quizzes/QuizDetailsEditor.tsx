@@ -11,12 +11,15 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import "./index.css";
 import { stateToHTML } from "draft-js-export-html";
 import { nowInEST } from "./ConvertToEST";
+import { useDispatch } from "react-redux";
+import { updateQuiz } from "./reducer";
 
 export default function QuizDetailsEditor({ quiz, setQuiz, saveQuiz }: { quiz: any; setQuiz: (quiz: any) => void; saveQuiz: (quiz: any) => void }) {
     const { cid, qid } = useParams();
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
+    const dispatch = useDispatch();
     useEffect(() => {
         if (quiz && quiz.description) {
             try {
@@ -185,11 +188,13 @@ export default function QuizDetailsEditor({ quiz, setQuiz, saveQuiz }: { quiz: a
                         </Link>
                         <Link to={`/Kanbas/Courses/${cid}/Quizzes/${qid}`}>
                             <button className="btn btn-lg btn-success ms-2 me-2" onClick={(e) => {
+                                dispatch(updateQuiz(quiz));
                                 saveQuiz(quiz);
                             }}>Save</button>
                         </Link>
                         <Link to={`/Kanbas/Courses/${cid}/Quizzes`}>
                             <button className="btn btn-lg btn-danger ms-2" onClick={(e) => {
+                                dispatch(updateQuiz(quiz));
                                 saveQuiz({ ...quiz, published: true });
                             }}>Save & Publish</button>
                         </Link>

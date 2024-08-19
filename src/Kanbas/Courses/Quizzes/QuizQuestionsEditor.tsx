@@ -10,6 +10,7 @@ export default function QuizQuestionsEditor({ quiz, setQuiz, saveQuiz }:
     { quiz: any; setQuiz: (quiz: any) => void; saveQuiz: (quiz: any) => void; }) {
     const { cid, qid } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const createQuestion = async () => {
         const newQuestion = {
             title: "New Question",
@@ -100,6 +101,7 @@ export default function QuizQuestionsEditor({ quiz, setQuiz, saveQuiz }:
                     }}>Cancel</button>
                 <button className="btn btn-lg btn-danger ms-2" onClick={(e) => {
                     e.preventDefault();
+                    dispatch(updateQuiz(quiz));
                     saveQuiz(quiz);
                     navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}`);
                 }}>Save</button>
