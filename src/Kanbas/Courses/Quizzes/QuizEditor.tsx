@@ -6,7 +6,7 @@ import * as client from "./client";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { FaCheckCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { updateQuiz } from "./reducer";
+import { setQuizzes, updateQuiz } from "./reducer";
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
@@ -22,9 +22,16 @@ export default function QuizEditor() {
 
         return Number(points);
     };
+    const fetchQuizzes = async () => {
+        const quizzes = await client.findQuizzesForCourse(cid as string);
+        dispatch(setQuizzes(quizzes));
+    };
+    
     const saveQuiz = async (quiz: any) => {
         await client.updateQuiz(quiz);
         dispatch(updateQuiz(quiz));
+        const quizzes = await client.findQuizzesForCourse(cid as string);
+        dispatch(setQuizzes([...quizzes, quiz]));
     };
 
     const fetchQuiz = async (qid: string) => {
