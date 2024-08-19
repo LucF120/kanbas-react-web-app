@@ -28,8 +28,8 @@ export default function KanbasNavigation() {
             icon: FaInbox
         },
         {
-            label: "Labs",
-            path: "/Labs",
+            label: "Landing",
+            path: "/Landing",
             icon: LiaCogSolid
         },
     ];

@@ -7,6 +7,7 @@ import TOC from "./TOC";
 import { Route, Routes, Navigate } from "react-router";
 import store from "./store";
 import { Provider } from "react-redux";
+import Landing from "../Landing";
 
 export default function Labs() {
     return (
@@ -18,12 +19,13 @@ export default function Labs() {
                 <h1>Labs</h1>
                 <TOC />
                 <Routes>
-                    <Route path="/" element={<Navigate to="Lab1" />} />
-                    <Route path="Lab1" element={<Lab1 />} />
+                    <Route path="/" element={<Navigate to="Landing" />} />
+                    <Route path="Landing" element={<Landing />} />
+                    {/* <Route path="Lab1" element={<Lab1 />} />
                     <Route path="Lab2" element={<Lab2 />} />
                     <Route path="Lab3/*" element={<Lab3 />} />
                     <Route path="Lab4" element={<Lab4 />} />
-		    <Route path="Lab5" element={<Lab5 />} />
+		    <Route path="Lab5" element={<Lab5 />} /> */}
                 </Routes>
             </div>
         </Provider>
