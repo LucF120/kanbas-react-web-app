@@ -94,13 +94,15 @@ export default function Quizzes() {
         let totalScore = 0;
         for (const answer of answers) {
             const question = questions.find((q: any) => q._id === answer.question);
-            if ((question && question.answerType === "Multiple Choice" || question.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
-                totalScore = totalScore + question.points;
-            }
-            if (question && question.answerType === "Fill In the Blank") {
-                const answerIsCorrect = question.correctWrittenAnswers.find((cwa: any) => cwa === answer.writtenAnswer);
-                if (answerIsCorrect) {
+            if (question) {
+                if ((question.answerType === "Multiple Choice" || question.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
                     totalScore = totalScore + question.points;
+                }
+                if (question.answerType === "Fill In the Blank") {
+                    const answerIsCorrect = question.correctWrittenAnswers.find((cwa: any) => cwa === answer.writtenAnswer);
+                    if (answerIsCorrect) {
+                        totalScore = totalScore + question.points;
+                    }
                 }
             }
         }
