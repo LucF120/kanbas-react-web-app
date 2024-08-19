@@ -6,6 +6,7 @@ import { setCurrentUser } from "./reducer";
 export default function Profile() {
     const [profile, setProfile] = useState<any>({});
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [updateProfileMessage, setUpdateProfileMessage] = useState<string>();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function Profile() {
         try {
             await client.updateProfile(profile._id, profile);
             dispatch(setCurrentUser(profile));
+            setUpdateProfileMessage("Profile Updated Successfully");
         } catch (err: any) {
             setErrorMessage(err.response.data.message);
         }
@@ -37,6 +39,9 @@ export default function Profile() {
             <h1>Profile</h1>
             {errorMessage && (
                 <div id="wd-profile-error-message" className="alert alert-danger mb-2 mt-2">{errorMessage}</div>
+            )}
+            {updateProfileMessage && (
+                <div id="wd-profile-success-message" className="alert alert-success mb-2 mt-2">{updateProfileMessage}</div>
             )}
             {profile && (
                 <div className="row mt-4">
