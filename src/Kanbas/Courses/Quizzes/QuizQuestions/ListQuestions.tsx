@@ -18,26 +18,28 @@ export default function ListQuestions({ quiz, quizSubmission, setQuizSubmission,
     };
     const answerIsCorrect = (question: any) => {
         const answer = findAnswerForQuestion(question._id);
-        if ((answer.answerType === "Multiple Choice" || answer.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
-            return true;
-        }
-        if (answer.answerType === "Fill In the Blank") {
-            const writtenAnswerExists = question.correctWrittenAnswers.find((cwa: string) => cwa === answer.writtenAnswer);
-            if (writtenAnswerExists) {
+        if (answer) {
+            if ((answer.answerType === "Multiple Choice" || answer.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
                 return true;
+            }
+            if (answer.answerType === "Fill In the Blank") {
+                const writtenAnswerExists = question.correctWrittenAnswers.find((cwa: string) => cwa === answer.writtenAnswer);
+                if (writtenAnswerExists) {
+                    return true;
+                }
             }
         }
         return false;
     };
     const canTakeQuizAgain = (numberOfAttempts: Number, quiz: any) => {
-        if(isFaculty) {
+        if (isFaculty) {
             return true;
         }
         if (!quiz.numAttempts) {
 
             return false;
         }
-        if(numberOfAttempts >= quiz.numAttempts) {
+        if (numberOfAttempts >= quiz.numAttempts) {
 
             return false;
         } else {

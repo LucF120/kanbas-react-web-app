@@ -24,13 +24,15 @@ export default function OneQuestionAtATime({ quiz, quizSubmission, setQuizSubmis
     };
 
     const answerIsCorrect = () => {
-        if ((answer.answerType === "Multiple Choice" || answer.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
-            return true;
-        }
-        if (answer.answerType === "Fill In the Blank") {
-            const writtenAnswerExists = question.correctWrittenAnswers.find((cwa: string) => cwa === answer.writtenAnswer);
-            if (writtenAnswerExists) {
+        if (answer) {
+            if ((answer.answerType === "Multiple Choice" || answer.answerType === "True/False") && answer.numberAnswer === question.correctAnswer) {
                 return true;
+            }
+            if (answer.answerType === "Fill In the Blank") {
+                const writtenAnswerExists = question.correctWrittenAnswers.find((cwa: string) => cwa === answer.writtenAnswer);
+                if (writtenAnswerExists) {
+                    return true;
+                }
             }
         }
         return false;
