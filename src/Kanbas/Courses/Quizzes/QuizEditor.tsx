@@ -31,7 +31,9 @@ export default function QuizEditor() {
         await client.updateQuiz(quiz);
         dispatch(updateQuiz(quiz));
         const quizzes = await client.findQuizzesForCourse(cid as string);
-        dispatch(setQuizzes([...quizzes, quiz]));
+        if(quizzes) {
+            dispatch(setQuizzes([...quizzes, quiz]));
+        }
     };
 
     const fetchQuiz = async (qid: string) => {
