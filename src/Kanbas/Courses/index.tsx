@@ -13,6 +13,7 @@ import QuizPreview from "./Quizzes/QuizPreview";
 import QuizDetailsEditor from "./Quizzes/QuizDetailsEditor";
 import QuizQuestionsEditor from "./Quizzes/QuizQuestionsEditor";
 import QuizEditor from "./Quizzes/QuizEditor";
+import FacultyOnlyRoute from "../FacultyOnlyRoute";
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -37,11 +38,23 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Piazza" element={<h2>Piazza</h2>} />
                         <Route path="Zoom" element={<h2>Zoom</h2>} />
                         <Route path="Assignments" element={<Assignments />} />
-                        <Route path="Assignments/:id" element={<AssignmentEditor />} />
+                        <Route path="Assignments/:id" element={
+                            <FacultyOnlyRoute>
+                                <AssignmentEditor />
+                            </FacultyOnlyRoute>
+                        } />
                         <Route path="Quizzes" element={<Quizzes />} />
-                        <Route path="Quizzes/:qid" element={<QuizDetails />} />
-                        <Route path="Quizzes/:qid/preview" element={<QuizPreview />} />
-                        <Route path="Quizzes/:qid/edit/*" element={<QuizEditor />} />
+                        <Route path="Quizzes/:qid" element={
+                            <FacultyOnlyRoute>
+                                <QuizDetails />
+                            </FacultyOnlyRoute>
+                        } />
+                        <Route path="Quizzes/:qid/start" element={<QuizPreview />} />
+                        <Route path="Quizzes/:qid/edit/*" element={
+                            <FacultyOnlyRoute>
+                                <QuizEditor />
+                            </FacultyOnlyRoute>
+                        } />
                         <Route path="Grades" element={<Grades />} />
                         <Route path="People" element={<PeopleTable />} />
                         <Route path="People/:uid" element={<PeopleTable />} />

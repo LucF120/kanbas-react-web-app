@@ -78,7 +78,10 @@ export default function QuizDetails() {
                         navigate(`/Kanbas/Courses/${cid}/Quizzes`);
                     }}>
                     Back</button>
-                <button className="btn btn-lg btn-danger me-4 mb-4">Start Quiz</button>
+                <button className="btn btn-lg btn-danger me-4 mb-4" onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}/Start`);
+                }}>Start Quiz</button>
                 <hr />
             </div>}
             {isFaculty &&
@@ -92,7 +95,7 @@ export default function QuizDetails() {
                     <button className="btn btn-lg btn-secondary me-4"
                         onClick={(e) => {
                             e.preventDefault();
-                            navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}/Preview`);
+                            navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}/Start`);
                         }}>
                         Preview</button>
                     <button className="btn btn-lg btn-secondary"

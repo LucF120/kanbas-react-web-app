@@ -61,12 +61,14 @@ export default function QuizQuestionsEditor({ quiz, setQuiz, saveQuiz }:
                                         editQuestion(id);
                                     }}>
                                     Edit</button>
-                                <button className="btn btn-lg btn-danger"
+                                { quiz.questions.length > 1 && 
+                                    <button className="btn btn-lg btn-danger"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         deleteQuestion(id);
                                     }}>
                                     Delete</button>
+                                    }
                             </div>
                             <div className="col-12 justify-content-center text-center">
                                 {q.editing && answerType === "Multiple Choice" &&
